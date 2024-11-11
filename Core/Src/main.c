@@ -110,7 +110,7 @@ int main(void)
 	  }
 
 	  for (int i = 100; i >= 0; i--) {
-	              Set_Duty_Cycle(i); // Gradually decrease duty cycle
+	              Set_Duty_Cycle(i); 
 	              HAL_Delay(20);
 	  }
     /* USER CODE END WHILE */
