@@ -91,7 +91,7 @@ The function ```Set_Duty_Cycle(int DutyCycle)``` limits the duty cycle within th
 if (DutyCycle < 0) DutyCycle = 0;
 if (DutyCycle > 100) DutyCycle = 100;
 ```
-This code limits the duty cyle range by setting it to 0 if it's lesser than 0, and if it's bigger than 100, the code sets it to 100, so the duty cycle stays within the valid range. 
+This code limits the duty cycle range by setting it to 0 if it's lesser than 0, and if it's bigger than 100, the code sets it to 100, so the duty cycle stays within the valid range. 
 
 ``` C
 TIM1->CCR2 = (DutyCycle * htim1.Init.Period) / 100;
