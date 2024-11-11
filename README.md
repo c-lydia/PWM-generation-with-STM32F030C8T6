@@ -113,6 +113,7 @@ The main loop, increment and decrement the duty cycle.
 for (int i = 1; i <= 100; i++){
      Set_Duty_Cycle(i);
      HAL_Delay(20);
+}
 ```
 This for loop, increment the duty cycle to increase the brightness of the LED gradually, and then delay the code execution by 20 milisecond. 
 
@@ -120,5 +121,6 @@ This for loop, increment the duty cycle to increase the brightness of the LED gr
 for (int i = 100; i >= 0; i--) {
      Set_Duty_Cycle(i);
      HAL_Delay(20);
+}
 ```
 This for loop, decrement the duty cycle to decrease the brightness of the LED gradually, and then delay the code execution by 20 milisecond.
