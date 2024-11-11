@@ -3,4 +3,4 @@ PWM (Pulse Width Modulation) is a type of digital electrical signa; which is per
 
 ##What is PWM? 
 PWM (Pulse Width Modulation) is a type of digital electrical signa; which is periodic in nature, with a triangular waveform.
-1[Graph for PWM]()
+![Graph for PWM](PWM graph.assets/photo_2024-11-11_11-43-43.jpg)
