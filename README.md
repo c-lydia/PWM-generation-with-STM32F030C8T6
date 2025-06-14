@@ -1,9 +1,25 @@
 # PWM generation with STM32F030C8T6
-PWM (Pulse Width Modulation) is a type of digital electrical signa; which is periodic in nature, with a triangular waveform. In this guide, I will explain PWM configuration and coding for STM32F030C8T6. 
 
-## What is PWM? 
+## Overview 
+This project demonstrates how to generate a PWM (Pulse Width Modulation) signal using an STM32F030C8T6. The implementation is based on STM32 HAL libraries and configure using STM32CubeIDE and STM32CubeMX. It includes theoretical explanation, peripheral configuration, and application code. 
+
+## Table of Contents 
+* Introduction to PWM
+* Applications of PWM
+* STM32 Timer Basics
+* System Configuration
+* PWM Frequency Calculation
+* Code Implementation
+* Output Behavior
+* Future Improvements
+
+## Introduction to PWM 
 PWM (Pulse Width Modulation) is a type of digital electrical signal which is periodic in nature, with a triangular waveform. Each PWm graph acts as wave. It has the period, which is the time it takes to repeat the same waveform, and the duty cycle, which is the time for which the signal is a logic 1 by the total time period. 
 
+**Key Terms:**
+* **Duty Cycle (%):** Ratio of signal "ON" time to total period.
+* **Frequency (Hz):** Number of waveform cycles per second.
+  
 If $`T_{on}`$ represents the duty cycle, and $`T_{p}`$ represents the period, the the duty cycle is defined by 
 ``` math
 Duty Cycle = \frac{T_{on}}{T_{p}} \cdot 100
@@ -22,11 +38,11 @@ These are a few applications of PWM:
   - 75% duty cycle = 3.75V
   - 100% duty cycle = 5V
  
-This application can be used to control speed of DC motors, nrightness of LEDs, or amplitude of buzzer, etc. 
+This application can be used to control speed of DC motors, brightness of LEDs, or amplitude of buzzer, etc. 
 
 * Control signal: Some electrical devices analyze the PWM signal to give coressponding output. Changes in the duty cycle is reflected on the output. This application can be used on servr motors, Electronic Sopeed controllers, etc.
 
-## PWM signal generation on STM32 
+## STM32 Timer Basics 
 STM32 CPUs have built-in timer. Timers are built-in circuit in the MCUs which can measure the passing of time. They count up to a certain number and upon reaching that number, they change the value of a certauin registor to indicate that the timer has counted up to that number. The time it takes to increment this count by 1 is deteremined by the clock frequency. If the frequency is 1KHz, it means the time period that will be taken by the timer to increment the value is 1 milisecond. This is how the ```HAL_Delay()``` function works. 
 
 However, depending on the register size, the timer has maximum limit. These are the limits on STM32 MCUs timers:
@@ -35,13 +51,14 @@ However, depending on the register size, the timer has maximum limit. These are 
 * 16-bit timer = 65536
 * 32-bit timer = 4294967296
 
-## Configuration 
+## System Configuration 
 Here's how to configure the clock frequency:
 * After creating the project, enable the HSE clock. Go to System>Core>RCC, then look to the right side of that panel, ther will be a panel where we can configure the RCC. Go to HSE, click the drop down, and choose Crystal/Ceramic Resonator
 * Go to Clock Configuration tab, and then set the HCLK to 48 and the APB1 Prescalar to /2
 * Go back to Pinout and Configuration tab, and then click the Timer drop down. Select TIM1, and set the Clock Source to Internal Clock and Channel2 to PWM Generation CH2
 * Go to Parameters setting, set the Prescalar to 48 - 1 (as the prescalar automatically add 1 to the input value) and Counter Period to 10000 (It's 16-bit, you can choose any value you want, just don't exceed 65536), then generate code
 
+## PWM Frequency Calculation 
 Note that we set the HCLK to 48, and as:  
 ``` math
 Timer Frequency = \frac{Timer Peripheral Clock Frequency}{Prescalar}
@@ -59,7 +76,7 @@ ARR (Auto Reload Registor) decides the value at which the timer starts counting 
 ``` math
 PWM Frequency = \frac{1Mhz}{10000} = 100Hz
 ```
-## Coding
+## Code Implementation 
 Now, as we already configured the clock, we will start writign code. This is the code for PWM generation: 
 ``` C
 void Set_Duty_Cycle(int DutyCycle) {
@@ -124,3 +141,23 @@ for (int i = 100; i >= 0; i--) {
 }
 ```
 This for loop, decrement the duty cycle to decrease the brightness of the LED gradually, and then delay the code execution by 20 milisecond.
+
+## Output Behavior
+* The PWM output is generatyed on TIM1 Channel2 (e.g., PA9 or similar depending on the board)
+* A LED connected to that pin will fade in and out smoothly
+
+## Future Improvement 
+* Add real-time PWM control using a potentiometer (ADC)
+* Use external interrupts for suty cycle steps
+* Add UART logging for monitoring PWm values
+* Visualize PWM waveform on oscilloscope
+
+## Author 
+Chheng Lydiya 
+
+Student at Institute of Technology Cambodia 
+
+GitHub: https://github.com/c-lydia
+
+## Contributing
+This is a learning repository, but if you have suggestions or ideas, feel free to open an issue or PR.  
